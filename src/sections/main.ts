@@ -15,11 +15,6 @@ function addVideoToMosaic(videoId: string, quality: string) {
 
   const playerContainer = document.createElement("div");
   playerContainer.classList.add("player-container");
-  playerContainer.style.position = "relative";
-  playerContainer.style.paddingBottom = "56.25%"; // Aspect ratio 16:9
-  playerContainer.style.height = "0";
-  playerContainer.style.overflow = "hidden";
-  playerContainer.style.borderRadius = "10px";
 
   const iframe = document.createElement("iframe");
   iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&vq=${quality}`;
