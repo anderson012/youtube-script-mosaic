@@ -1,14 +1,21 @@
-// =================================================================
+import { createButton } from "../components/button";
+import "../libs/sortable";
+
 // Função para remover todos os filhos de um elemento
-function removeAllChildNodes(parent) {
+function removeAllChildNodes(parent: HTMLElement) {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
   }
 }
 
 // Função para adicionar um player de vídeo ao mosaico
-function addVideoToMosaic(videoId, quality) {
+function addVideoToMosaic(videoId: string, quality: string) {
   const mosaicContainer = document.getElementById("mosaicContainer");
+
+  if (!mosaicContainer) {
+    console.error("mosaicContainer not found");
+    return;
+  }
 
   const playerContainer = document.createElement("div");
   playerContainer.classList.add("player-container");
@@ -27,9 +34,12 @@ function addVideoToMosaic(videoId, quality) {
   iframe.style.height = "100%";
   iframe.style.border = "none";
 
-  const removeButton = document.createElement("button");
-  removeButton.innerText = "Remove";
-  removeButton.classList.add("remove-button");
+  const removeButton = createButton({
+    name: "Remover",
+    classNames: ["remove-button"],
+    variant: "danger",
+  });
+
   removeButton.style.position = "absolute";
   removeButton.style.top = "40px";
   removeButton.style.right = "10px";
@@ -40,18 +50,24 @@ function addVideoToMosaic(videoId, quality) {
     adjustMosaicGrid();
   });
 
-  const dragHandle = document.createElement("button");
-  dragHandle.innerText = "≡";
-  dragHandle.classList.add("drag-handle");
+  const dragHandle = createButton({
+    name: "≡",
+    classNames: ["drag-handle"],
+    variant: "primary",
+  });
+
   dragHandle.style.position = "absolute";
   dragHandle.style.top = "10px";
   dragHandle.style.right = "10px";
   dragHandle.style.cursor = "move";
   dragHandle.style.display = "none";
 
-  const mainToggleButton = document.createElement("button");
-  mainToggleButton.innerText = "Set as Main";
-  mainToggleButton.classList.add("main-toggle-button");
+  const mainToggleButton = createButton({
+    name: "Set as Main",
+    classNames: ["main-toggle-button"],
+    variant: "primary",
+  });
+
   mainToggleButton.style.position = "absolute";
   mainToggleButton.style.top = "70px";
   mainToggleButton.style.right = "10px";
@@ -65,8 +81,9 @@ function addVideoToMosaic(videoId, quality) {
       const previousMain = document.querySelector(".main-video");
       if (previousMain) {
         previousMain.classList.remove("main-video");
-        previousMain.querySelector(".main-toggle-button").innerText =
-          "Set as Main";
+        previousMain.querySelector<HTMLButtonElement>(
+          ".main-toggle-button"
+        )!.innerText = "Set as Main";
       }
       playerContainer.classList.add("main-video");
       mainToggleButton.innerText = "Unset as Main";
@@ -99,8 +116,12 @@ function addVideoToMosaic(videoId, quality) {
 // Função para ajustar a grade do mosaico
 function adjustMosaicGrid() {
   const mosaicContainer = document.getElementById("mosaicContainer");
+  if (!mosaicContainer) {
+    return;
+  }
+
   const children = Array.from(mosaicContainer.children);
-  const mainVideo = document.querySelector(".main-video");
+  const mainVideo = document.querySelector<HTMLDivElement>(".main-video");
   const columns = parseInt(
     document.getElementById("columnsSelector").value,
     10
@@ -130,7 +151,7 @@ function adjustMosaicGrid() {
 }
 
 // Função para criar o layout inicial do mosaico e adicionar um campo para novas URLs
-function createInitialLayout(videoId, quality) {
+function createInitialLayout(videoId: string, quality: string) {
   // Remove o conteúdo existente da página
   removeAllChildNodes(document.body);
   document.body.style.overflow = "auto";
@@ -154,17 +175,22 @@ function createInitialLayout(videoId, quality) {
   inputField.style.marginRight = "10px";
   inputContainer.appendChild(inputField);
 
-  const addButton = document.createElement("button");
-  addButton.innerText = "Add Video";
+  const addButton = createButton({
+    name: "Add Video",
+    classNames: ["remove-button"],
+    variant: "primary",
+  });
   inputContainer.appendChild(addButton);
 
   const qualitySelector = document.createElement("select");
+  qualitySelector.classList.add("form-select");
   addQualityOptions(qualitySelector); // Adicionar opções de qualidade
   qualitySelector.style.marginLeft = "10px";
   qualitySelector.id = "qualitySelector";
   inputContainer.appendChild(qualitySelector);
 
   const columnsSelector = document.createElement("select");
+  columnsSelector.classList.add("form-select");
   addColumnOptions(columnsSelector); // Adicionar opções de colunas
   columnsSelector.style.marginLeft = "10px";
   columnsSelector.id = "columnsSelector";
@@ -184,7 +210,7 @@ function createInitialLayout(videoId, quality) {
   addVideoToMosaic(videoId, quality);
 
   if (window.Sortable) {
-    Sortable.create(mosaicContainer, {
+    window.Sortable.create(mosaicContainer, {
       // handle: '.drag-handle', // Elemento usado para arrastar
       animation: 150, // Animação durante o arrasto
       onEnd: function (evt) {
