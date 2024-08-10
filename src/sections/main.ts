@@ -1,5 +1,6 @@
 import { createButton } from "../components/button";
-import "../libs/sortable";
+// import "../libs/sortable";
+import sortable from "sortablejs";
 
 // Função para remover todos os filhos de um elemento
 function removeAllChildNodes(parent: HTMLElement) {
@@ -120,10 +121,10 @@ function adjustMosaicGrid() {
     return;
   }
 
-  const children = Array.from(mosaicContainer.children);
+  const children = Array.from(mosaicContainer.children) as HTMLDivElement[];
   const mainVideo = document.querySelector<HTMLDivElement>(".main-video");
   const columns = parseInt(
-    document.getElementById("columnsSelector").value,
+    (document.getElementById("columnsSelector") as HTMLSelectElement).value,
     10
   );
 
@@ -209,24 +210,24 @@ function createInitialLayout(videoId: string, quality: string) {
   // Adiciona o vídeo inicial ao mosaico
   addVideoToMosaic(videoId, quality);
 
-  if (window.Sortable) {
-    window.Sortable.create(mosaicContainer, {
-      // handle: '.drag-handle', // Elemento usado para arrastar
-      animation: 150, // Animação durante o arrasto
-      onEnd: function (evt) {
-        // Callback quando o arrasto termina
-        console.log(
-          "Order changed:",
-          evt.from,
-          evt.to,
-          evt.oldIndex,
-          evt.newIndex
-        );
-      },
-    });
-  } else {
-    console.error("Ops, Sortable not found");
-  }
+  // if (window.Sortable) {
+  sortable.create(mosaicContainer, {
+    // handle: '.drag-handle', // Elemento usado para arrastar
+    animation: 150, // Animação durante o arrasto
+    onEnd: function (evt: any) {
+      // Callback quando o arrasto termina
+      console.log(
+        "Order changed:",
+        evt.from,
+        evt.to,
+        evt.oldIndex,
+        evt.newIndex
+      );
+    },
+  });
+  // } else {
+  //   console.error("Ops, Sortable not found");
+  // }
 
   // Evento de clique para adicionar novos vídeos
   addButton.addEventListener("click", () => {
@@ -255,7 +256,7 @@ function createInitialLayout(videoId: string, quality: string) {
 }
 
 // Função para adicionar opções de qualidade ao seletor
-function addQualityOptions(selector) {
+function addQualityOptions(selector: HTMLSelectElement) {
   const qualities = [
     "default",
     "small",
@@ -274,19 +275,19 @@ function addQualityOptions(selector) {
 }
 
 // Função para adicionar opções de colunas ao seletor
-function addColumnOptions(selector) {
+function addColumnOptions(selector: HTMLSelectElement) {
   for (let i = 1; i <= 3; i++) {
     const option = document.createElement("option");
-    option.value = i;
+    option.value = i.toString();
     option.innerText = `${i} column${i > 1 ? "s" : ""}`;
     selector.appendChild(option);
   }
 
-  selector.value = 2;
+  selector.value = "2";
 }
 
 // Função para obter o ID do vídeo do YouTube a partir da URL
-function getVideoIdFromUrl(url) {
+function getVideoIdFromUrl(url: string) {
   const videoIdMatch = url.match(
     /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
   );
