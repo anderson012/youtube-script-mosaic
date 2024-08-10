@@ -1,13 +1,7 @@
 import { createButton } from "../components/button";
 // import "../libs/sortable";
 import sortable from "sortablejs";
-
-// Função para remover todos os filhos de um elemento
-function removeAllChildNodes(parent: HTMLElement) {
-  while (parent.firstChild) {
-    parent.removeChild(parent.firstChild);
-  }
-}
+import removeAllChildNodes from "../utils/removeAllChildNodes";
 
 // Função para adicionar um player de vídeo ao mosaico
 function addVideoToMosaic(videoId: string, quality: string) {
@@ -110,7 +104,6 @@ function addVideoToMosaic(videoId: string, quality: string) {
   playerContainer.appendChild(mainToggleButton);
   mosaicContainer.appendChild(playerContainer);
 
-  // Configuração do SortableJS para arrastar e soltar
   adjustMosaicGrid();
 }
 
@@ -156,6 +149,8 @@ function createInitialLayout(videoId: string, quality: string) {
   // Remove o conteúdo existente da página
   removeAllChildNodes(document.body);
   document.body.style.overflow = "auto";
+  document.body.classList.add("bg-dark");
+  document.querySelector("html")!.style.fontSize = "unset";
 
   // Cria o contêiner principal
   const mainContainer = document.createElement("div");
@@ -171,6 +166,7 @@ function createInitialLayout(videoId: string, quality: string) {
   mainContainer.appendChild(inputContainer);
 
   const inputField = document.createElement("input");
+  inputField.classList.add("form-control");
   inputField.type = "text";
   inputField.placeholder = "Enter YouTube URL";
   inputField.style.marginRight = "10px";
