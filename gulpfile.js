@@ -1,27 +1,25 @@
 const gulp = require("gulp");
+const babel = require("gulp-babel");
+const ts = require("gulp-typescript");
 const concat = require("gulp-concat");
 const uglify = require("gulp-uglify");
-const babel = require("gulp-babel");
+const tsProject = ts.createProject("tsconfig.json");
 
-// Caminhos dos arquivos
-const paths = {
-  index: "src/index.js",
-  libs: "src/libs/*.js",
-};
-
-// Tarefa para compilar, unificar e minificar os scripts
+// Tarefa para processar TypeScript e JavaScript
 function scripts() {
   return gulp
-    .src([paths.libs, paths.index])
+    .src(["src/**/*.ts", "src/**/*.js"]) // Inclui TS e JS
+    .pipe(tsProject()) // Compila TypeScript
     .pipe(
       babel({
-        presets: ["@babel/env"],
+        // Transpila JavaScript para ES5
+        presets: ["@babel/preset-env"],
+        plugins: ["@babel/plugin-transform-modules-umd"], // Para suporte a módulos no navegador
       })
     )
-    .pipe(concat("bundle.min.js"))
-    .pipe(uglify())
-    .pipe(gulp.dest("dist"));
+    .pipe(concat("bundle.min.js")) // Concatena todos os arquivos
+    .pipe(uglify()) // Minifica o código final
+    .pipe(gulp.dest("dist")); // Salva na pasta dist
 }
 
-// Tarefa padrão
-exports.default = scripts;
+exports.default = gulp.series(scripts);

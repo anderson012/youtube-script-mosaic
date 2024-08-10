@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "es6",
+    "strict": true,
+    "allowJs": true, // Habilita o suporte para arquivos JavaScript
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist", // Saída dos arquivos compilados
+    "rootDir": "./src" // Diretório raiz dos arquivos de entrada
+  },
+  "include": ["src/**/*.ts", "src/**/*.css.ts", "src/**/*.js"]
+}
