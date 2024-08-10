@@ -1,7 +1,8 @@
+import "./main.scss";
+
 import { createButton } from "../components/button";
-// import "../libs/sortable";
 import sortable from "sortablejs";
-import removeAllChildNodes from "../utils/removeAllChildNodes";
+import configureBody from "../utils/configure-body";
 
 // Função para adicionar um player de vídeo ao mosaico
 function addVideoToMosaic(videoId: string, quality: string) {
@@ -35,9 +36,6 @@ function addVideoToMosaic(videoId: string, quality: string) {
     variant: "danger",
   });
 
-  removeButton.style.position = "absolute";
-  removeButton.style.top = "40px";
-  removeButton.style.right = "10px";
   removeButton.style.display = "none";
 
   removeButton.addEventListener("click", () => {
@@ -51,10 +49,6 @@ function addVideoToMosaic(videoId: string, quality: string) {
     variant: "primary",
   });
 
-  dragHandle.style.position = "absolute";
-  dragHandle.style.top = "10px";
-  dragHandle.style.right = "10px";
-  dragHandle.style.cursor = "move";
   dragHandle.style.display = "none";
 
   const mainToggleButton = createButton({
@@ -63,9 +57,6 @@ function addVideoToMosaic(videoId: string, quality: string) {
     variant: "primary",
   });
 
-  mainToggleButton.style.position = "absolute";
-  mainToggleButton.style.top = "70px";
-  mainToggleButton.style.right = "10px";
   mainToggleButton.style.display = "none";
 
   mainToggleButton.addEventListener("click", () => {
@@ -147,10 +138,7 @@ function adjustMosaicGrid() {
 // Função para criar o layout inicial do mosaico e adicionar um campo para novas URLs
 function createInitialLayout(videoId: string, quality: string) {
   // Remove o conteúdo existente da página
-  removeAllChildNodes(document.body);
-  document.body.style.overflow = "auto";
-  document.body.classList.add("bg-dark");
-  document.querySelector("html")!.style.fontSize = "unset";
+  configureBody();
 
   // Cria o contêiner principal
   const mainContainer = document.createElement("div");
@@ -196,11 +184,7 @@ function createInitialLayout(videoId: string, quality: string) {
   // Cria o contêiner do mosaico
   const mosaicContainer = document.createElement("div");
   mosaicContainer.id = "mosaicContainer";
-  mosaicContainer.style.display = "grid";
-  mosaicContainer.style.gridAutoFlow = "row";
-  mosaicContainer.style.gap = "10px";
-  mosaicContainer.style.width = "100%";
-  mosaicContainer.style.padding = "10px";
+  mosaicContainer.classList.add("mosaic-container");
   mainContainer.appendChild(mosaicContainer);
 
   // Adiciona o vídeo inicial ao mosaico

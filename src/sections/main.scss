@@ -1,0 +1,35 @@
+.mosaic-container {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+}
+
+.player-container {
+  position: relative;
+  padding-bottom: 56.25%; // Aspect ratio 16:9
+  height: 0;
+  overflow: hidden;
+  border-radius: 10px;
+
+  .drag-handle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: move;
+  }
+
+  .remove-button {
+    position: absolute;
+    top: 50px;
+    right: 10px;
+  }
+
+  .main-toggle-button {
+    position: absolute;
+    top: 90px;
+    right: 10px;
+    display: none;
+  }
+}
