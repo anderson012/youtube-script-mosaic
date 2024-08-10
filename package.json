@@ -1,0 +1,32 @@
+{
+  "name": "youtube-script-mosaic",
+  "version": "1.0.0",
+  "description": "Generates an script to past on Youtube console and creates a mosaic",
+  "main": "index.js",
+  "repository": "git@github.com:anderson012/youtube-script-mosaic.git",
+  "author": "Anderson Carlos <andersoncarlos28@gmail.com>",
+  "license": "GPL-3.0-only",
+  "private": false,
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/preset-typescript": "^7.24.7",
+    "@types/sortablejs": "^1.15.8",
+    "babel-loader": "^9.1.3",
+    "css-loader": "^7.1.2",
+    "mini-css-extract-plugin": "^2.9.0",
+    "sass": "^1.77.8",
+    "sass-loader": "^16.0.0",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.5.4",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "sortablejs": "^1.15.2"
+  }
+}
