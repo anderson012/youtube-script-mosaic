@@ -1,0 +1,18 @@
+{
+  "name": "youtube-script-mosaic",
+  "version": "1.0.0",
+  "description": "Generates an script to past on Youtube console and creates a mosaic",
+  "main": "index.js",
+  "repository": "git@github.com:anderson012/youtube-script-mosaic.git",
+  "author": "Anderson Carlos <andersoncarlos28@gmail.com>",
+  "license": "GPL-3.0-only",
+  "private": false,
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "gulp": "^5.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.2"
+  }
+}
