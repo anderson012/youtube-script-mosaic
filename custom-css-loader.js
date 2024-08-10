@@ -1,7 +1,0 @@
-module.exports = function (source = "") {
-  return `
-      const style = document.createElement('style');
-      style.textContent = \`${source}\`;
-      document.head.appendChild(style);
-    `;
-};
